@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInterac
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 
-class CommandManager(private val jda: JDA) : ListenerAdapter() {
+class CommandManager(private val jda: JDA, private val guilds: List<String>) : ListenerAdapter() {
 
     private val commands = mutableMapOf<String, JRedeemCode>()
 
@@ -36,6 +36,11 @@ class CommandManager(private val jda: JDA) : ListenerAdapter() {
      * Handles command execution.
      */
     override fun onSlashCommandInteraction(event: SlashCommandInteractionEvent) {
+        if (!event.isFromGuild) return
+        if (!guilds.contains(event.guild?.id)){
+            event.guild?.leave()?.queue()
+            return
+        }
         val command = commands[event.name]
         if (command != null) {
             command.execute(event)

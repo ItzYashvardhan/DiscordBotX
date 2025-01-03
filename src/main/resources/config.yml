@@ -1,4 +1,7 @@
-
 bot:
   enabled: false
   token: "YOUR_DISCORD_BOT_TOKEN"
+
+guilds:
+    - "GUILD_ID_1"
+    - "GUILD_ID_2"
