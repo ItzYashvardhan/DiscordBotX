@@ -20,7 +20,7 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("net.dv8tion:JDA:5.2.2")
-    compileOnly(files("C:/Users/yashv/IdeaProjects/RedeemX/build/libs/RedeemX-1.0-all.jar"))
+    compileOnly(files("C:/Users/yashv/IdeaProjects/RedeemCodeX/build/libs/RedeemCodeX-1.0-all.jar"))
 }
 
 val targetJavaVersion = 17

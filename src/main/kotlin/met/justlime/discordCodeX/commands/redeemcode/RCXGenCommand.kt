@@ -1,6 +1,6 @@
 package met.justlime.discordCodeX.commands.redeemcode
 
-import me.justlime.redeemX.api.RedeemXAPI
+import me.justlime.redeemcodex.api.RedeemXAPI
 import met.justlime.discordCodeX.commands.JRedeemCode
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent

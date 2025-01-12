@@ -1,10 +1,10 @@
 package met.justlime.discordCodeX.commands.redeemcode
 
-import me.justlime.redeemX.api.RedeemXAPI
-import me.justlime.redeemX.api.RedeemXAPI.modifyCode
-import me.justlime.redeemX.api.RedeemXAPI.modifyTemplate
-import me.justlime.redeemX.api.RedeemXAPI.placeHolder
-import me.justlime.redeemX.enums.JTab
+import me.justlime.redeemcodex.api.RedeemXAPI
+import me.justlime.redeemcodex.api.RedeemXAPI.modifyCode
+import me.justlime.redeemcodex.api.RedeemXAPI.modifyTemplate
+import me.justlime.redeemcodex.api.RedeemXAPI.placeHolder
+import me.justlime.redeemcodex.enums.JTab
 import met.justlime.discordCodeX.commands.JRedeemCode
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
@@ -44,7 +44,7 @@ class RCXModifyCommand : JRedeemCode {
 
 
         when (type) {
-            "code" -> if (value != null) modifyCode(code?: return, property, value) else modifyCode(code?: return, property)
+            "code" -> if (value != null) modifyCode(code ?: return, property, value) else modifyCode(code ?: return, property)
             "template" -> if (value != null) modifyTemplate(template ?: return, property, value) else modifyTemplate(template ?: return, property)
         }
 
