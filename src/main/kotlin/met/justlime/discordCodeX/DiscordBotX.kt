@@ -1,6 +1,7 @@
 package met.justlime.discordCodeX
 
-import met.justlime.discordCodeX.commands.CommandManager
+import met.justlime.discordCodeX.listener.CommandManager
+import met.justlime.discordCodeX.listener.GuildJoinListener
 import net.dv8tion.jda.api.JDA
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -19,6 +20,7 @@ class DiscordBotX : JavaPlugin() {
         // Retrieve bot token and guilds
         val token = config.getString("bot.token")?.takeIf { it.isNotEmpty() }
         val guilds = config.getStringList("guilds").takeIf { it.isNotEmpty() }
+        val roles = config.getStringList("roles").takeIf { it.isNotEmpty() }
 
         if (token == null) {
             logger.severe("Bot token is missing in the config.yml. Disabling plugin.")
@@ -27,6 +29,11 @@ class DiscordBotX : JavaPlugin() {
 
         if (guilds == null) {
             logger.severe("Guilds are missing in the config.yml. Disabling plugin.")
+            return disablePlugin()
+        }
+
+        if (roles == null) {
+            logger.severe("Roles are missing in the config.yml. Disabling plugin.")
             return disablePlugin()
         }
 
@@ -42,7 +49,7 @@ class DiscordBotX : JavaPlugin() {
             logger.info("Bot connected successfully.")
 
             // Initialize commands and register listeners
-            val commandManager = CommandManager(jda, guilds)
+            val commandManager = CommandManager(jda, guilds, roles)
             commandManager.initializeCommands()
             jda.addEventListener(commandManager)
             jda.addEventListener(GuildJoinListener(guilds))

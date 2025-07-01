@@ -2,6 +2,20 @@ bot:
   enabled: false
   token: "YOUR_DISCORD_BOT_TOKEN"
 
+##It allow bot to join multiple guild but at this moment it can only work with one guid only.
 guilds:
     - "GUILD_ID_1"
     - "GUILD_ID_2"
+
+
+
+##ID of the channel where the bot can access commands
+channels:
+  - "CHANNEL_ID_1"
+  - "CHANNEL_ID_2"
+
+
+##If a user have any one of role then they can access to bot command
+roles:
+  - "ROLE_ID_1"
+  - "ROLE_ID_2"

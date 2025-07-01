@@ -9,6 +9,7 @@ import met.justlime.discordCodeX.commands.JRedeemCode
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.Command
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.CommandData
 import net.dv8tion.jda.api.interactions.commands.build.Commands
@@ -32,7 +33,7 @@ class RCXModifyCommand : JRedeemCode {
                 OptionData(OptionType.STRING, "property", "The property to modify", true).setAutoComplete(true),
                 OptionData(OptionType.STRING, "value", "The new value for the property", false),
             )
-        )
+        ).setDefaultPermissions(DefaultMemberPermissions.DISABLED)
     }
 
     override fun execute(event: SlashCommandInteractionEvent) {

@@ -5,6 +5,7 @@ import met.justlime.discordCodeX.commands.JRedeemCode
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.Command
+import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.CommandData
 import net.dv8tion.jda.api.interactions.commands.build.Commands
@@ -24,7 +25,7 @@ class RCXGenCommand : JRedeemCode {
                     "Template to use for the codes",
                     false
                 ).setAutoComplete(true) // Enable autocomplete for templates
-            )
+            ).setDefaultPermissions(DefaultMemberPermissions.DISABLED)
     }
 
     override fun execute(event: SlashCommandInteractionEvent) {
