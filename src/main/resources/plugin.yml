@@ -1,6 +1,6 @@
-name: DiscordBotX
-version: '1.0-EAP'
-main: met.justlime.discordCodeX.DiscordBotX
+name: RedeemXBot
+version: '1.0.0'
+main: me.justlime.discordCodeX.RedeemXBot
 api-version: '1.13'
 softdepend: [RedeemCodeX]
 

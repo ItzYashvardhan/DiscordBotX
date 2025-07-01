@@ -1,4 +1,4 @@
-package met.justlime.discordCodeX
+package me.justlime.discordCodeX
 
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder

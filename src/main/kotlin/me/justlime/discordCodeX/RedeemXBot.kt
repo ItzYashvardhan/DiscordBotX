@@ -1,11 +1,11 @@
-package met.justlime.discordCodeX
+package me.justlime.discordCodeX
 
-import met.justlime.discordCodeX.listener.CommandManager
-import met.justlime.discordCodeX.listener.GuildJoinListener
+import me.justlime.discordCodeX.listener.CommandManager
+import me.justlime.discordCodeX.listener.GuildJoinListener
 import net.dv8tion.jda.api.JDA
 import org.bukkit.plugin.java.JavaPlugin
 
-class DiscordBotX : JavaPlugin() {
+class RedeemXBot : JavaPlugin() {
     private lateinit var jda: JDA
 
     override fun onEnable() {
@@ -51,8 +51,10 @@ class DiscordBotX : JavaPlugin() {
             // Initialize commands and register listeners
             val commandManager = CommandManager(jda, guilds, roles)
             commandManager.initializeCommands()
+
             jda.addEventListener(commandManager)
             jda.addEventListener(GuildJoinListener(guilds))
+            return
         } catch (exception: Exception) {
             logger.severe("Failed to initialize the Discord bot: ${exception.message}")
             exception.printStackTrace()

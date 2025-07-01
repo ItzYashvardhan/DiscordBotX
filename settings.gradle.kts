@@ -1,1 +1,1 @@
-rootProject.name = "DiscordBotX"
+rootProject.name = "RedeemXBot"

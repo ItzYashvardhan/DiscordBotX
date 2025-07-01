@@ -1,4 +1,4 @@
-package met.justlime.discordCodeX.listener
+package me.justlime.discordCodeX.listener
 
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter

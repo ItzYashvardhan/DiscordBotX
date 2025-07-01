@@ -1,4 +1,4 @@
-package met.justlime.discordCodeX.commands
+package me.justlime.discordCodeX.commands
 
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
