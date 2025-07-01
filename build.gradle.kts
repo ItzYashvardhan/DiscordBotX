@@ -14,13 +14,14 @@ repositories {
     maven("https://oss.sonatype.org/content/groups/public/") {
         name = "sonatype"
     }
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("net.dv8tion:JDA:5.2.2")
-    compileOnly(files("C:/Users/yashv/IdeaProjects/RedeemCodeX/build/libs/RedeemCodeX-1.0-all.jar"))
+    compileOnly("com.github.ItzYashvardhan:RedeemCodeX-API:1.0.0")
 }
 
 val targetJavaVersion = 17
