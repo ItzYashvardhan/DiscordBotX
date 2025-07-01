@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "met.justlime"
-version = "1.0-EAP"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -19,9 +19,9 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("net.dv8tion:JDA:5.2.2")
     compileOnly("com.github.ItzYashvardhan:RedeemCodeX-API:1.0.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("net.dv8tion:JDA:5.6.1")
 }
 
 val targetJavaVersion = 17
@@ -47,7 +47,7 @@ tasks.processResources {
 // Task to copy the jar to the server plugins folder
 tasks.register<Copy>("copyToServerPlugins") {
     dependsOn("shadowJar")  // Ensure shadowJar completes before copying
-    from(layout.buildDirectory.file("libs/DiscordBotX-1.0-EAP-all.jar"))  // Correct output file path
+    from(layout.buildDirectory.file("libs/${project.name}-${project.version}-all.jar"))  // Correct output file path
     into("E:/Minecraft/servers/Plugin-Maker/plugins")  // Destination folder
 }
 
