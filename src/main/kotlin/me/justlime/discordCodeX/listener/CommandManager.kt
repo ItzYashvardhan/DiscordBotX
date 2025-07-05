@@ -4,6 +4,7 @@ import me.justlime.discordCodeX.commands.JRedeemCode
 import me.justlime.discordCodeX.commands.redeemcode.RCXDeleteCommand
 import me.justlime.discordCodeX.commands.redeemcode.RCXGenCommand
 import me.justlime.discordCodeX.commands.redeemcode.RCXUsageCommand
+import me.justlime.discordCodeX.rxbPlugin
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
@@ -17,23 +18,6 @@ class CommandManager(
 
     private val commands = mutableMapOf<String, JRedeemCode>()
 
-    /**
-     * Registers all commands at once.
-     */
-    private fun register(vararg commandList: JRedeemCode) {
-        commandList.forEach { command ->
-            val commandData = command.buildCommand()
-            commands[commandData.name] = command
-        }
-
-        val commandDataList = commands.values.map { it.buildCommand() }
-
-        jda.guilds.forEach { guild ->
-            guild.updateCommands().addCommands(commandDataList).queue { registeredCommands ->
-            }
-        }
-    }
-
     fun initializeCommands() {
         val commands = listOf(
             RCXGenCommand(),
@@ -41,8 +25,34 @@ class CommandManager(
 //            RCXModifyCommand(),
             RCXUsageCommand()
         )
+        jda.awaitReady()
         register(*commands.toTypedArray())
     }
+
+    /**
+     * Registers all commands at once.
+     */
+    private fun register(vararg commandList: JRedeemCode) {
+        // Register commands to the internal map
+        commandList.forEach { cmd ->
+            val data = cmd.buildCommand()
+            commands[data.name] = cmd
+        }
+
+        // Prepare a list of all command data
+        val commandDataList = commands.values.map { it.buildCommand() }
+
+        // Register to all guilds
+        jda.guilds.forEach { guild ->
+            guild.updateCommands()
+                .addCommands(commandDataList)
+                .queue { registered ->
+                    // log registered command names
+                     rxbPlugin.logger.info("Registered commands for ${guild.name}: ${registered.map { it.name }}")
+                }
+        }
+    }
+
 
     /**
      * Handles command execution.

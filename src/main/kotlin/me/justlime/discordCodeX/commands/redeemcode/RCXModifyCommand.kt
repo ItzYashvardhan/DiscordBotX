@@ -1,7 +1,6 @@
 package me.justlime.discordCodeX.commands.redeemcode
 
 import api.justlime.redeemcodex.RedeemXAPI
-import me.justlime.discordCodeX.commands.JRedeemCode
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.Command
@@ -12,8 +11,8 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands
 import net.dv8tion.jda.api.interactions.commands.build.OptionData
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
 
-class RCXModifyCommand : JRedeemCode {
-    override fun buildCommand(): CommandData {
+class RCXModifyCommand {
+    fun buildCommand(): CommandData {
         return Commands.slash("modify", "Modify a redeem code or template").addSubcommands(
             // Subcommand for modifying a code
             SubcommandData("code", "Modify a redeem code").addOptions(
@@ -37,7 +36,7 @@ class RCXModifyCommand : JRedeemCode {
         ).setDefaultPermissions(DefaultMemberPermissions.DISABLED)
     }
 
-    override fun execute(event: SlashCommandInteractionEvent) {
+    fun execute(event: SlashCommandInteractionEvent) {
         val code = event.getOption("code")?.asString
         val template = event.getOption("template")?.asString
         val type = if (code != null) "code" else "template"
@@ -55,7 +54,7 @@ class RCXModifyCommand : JRedeemCode {
 
     }
 
-    override fun handleAutoComplete(event: CommandAutoCompleteInteractionEvent): List<Command.Choice> {
+    fun handleAutoComplete(event: CommandAutoCompleteInteractionEvent): List<Command.Choice> {
         val focusedOption = event.focusedOption.name
         val property = mutableListOf<String>()
         val query = event.focusedOption.value.lowercase() // User's input for filtering

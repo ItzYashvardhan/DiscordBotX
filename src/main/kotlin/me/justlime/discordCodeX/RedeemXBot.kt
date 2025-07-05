@@ -7,8 +7,11 @@ import me.justlime.discordCodeX.utils.JServices
 import net.dv8tion.jda.api.JDA
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
+import java.time.Duration
+
 
 lateinit var rxbPlugin: RedeemXBot
+
 class RedeemXBot : JavaPlugin() {
     private lateinit var jda: JDA
 
@@ -18,7 +21,7 @@ class RedeemXBot : JavaPlugin() {
 
         JServices.configManager = ConfigManager()
 
-        if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) JServices.isPlaceholderHooked = true
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) JServices.isPlaceholderHooked = true
 
         // Check if the bot is enabled
         if (!config.getBoolean("bot.enabled")) {
@@ -48,7 +51,11 @@ class RedeemXBot : JavaPlugin() {
 
         // Initialize JDA
         try {
-            jda = BotManager.buildBot(token).apply { awaitReady() }
+            try {
+                jda = BotManager.buildBot(token).apply { awaitReady() }
+            } catch (e: Exception) {
+                this.logger.info("Force Reloaded Bot")
+            }
             jda.guilds.forEach { guild ->
                 if (guild.id !in guilds) {
                     logger.warning("Leaving unauthorized guild: ${guild.name} (${guild.id})")
@@ -86,6 +93,13 @@ class RedeemXBot : JavaPlugin() {
     }
 
     private fun disablePlugin() {
-        server.pluginManager.disablePlugin(this)
+        val client = jda.httpClient
+        client.connectionPool.evictAll()
+        client.dispatcher.executorService.shutdown()
+        jda.shutdownNow()
+        if (!jda.awaitShutdown(Duration.ofSeconds(3))) {
+            jda.shutdownNow(); // Cancel request queue
+            jda.awaitShutdown(); // Wait until shutdown is complete (indefinitely)
+        }
     }
 }
