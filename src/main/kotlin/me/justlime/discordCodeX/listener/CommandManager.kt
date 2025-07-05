@@ -3,7 +3,6 @@ package me.justlime.discordCodeX.listener
 import me.justlime.discordCodeX.commands.JRedeemCode
 import me.justlime.discordCodeX.commands.redeemcode.RCXDeleteCommand
 import me.justlime.discordCodeX.commands.redeemcode.RCXGenCommand
-import me.justlime.discordCodeX.commands.redeemcode.RCXModifyCommand
 import me.justlime.discordCodeX.commands.redeemcode.RCXUsageCommand
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
@@ -31,17 +30,6 @@ class CommandManager(
 
         jda.guilds.forEach { guild ->
             guild.updateCommands().addCommands(commandDataList).queue { registeredCommands ->
-                // You may apply privileges here if needed
-                // Example: restrict command execution to roles
-                // Note: Privileges are now handled via ApplicationCommandPermissions (JDA 5+)
-                /*
-                registeredCommands.forEach { cmd ->
-                    val privileges = roles.map {
-                        CommandPrivilege.enableRole(it)
-                    }
-                    guild.updateCommandPrivilegesById(cmd.id, privileges).queue()
-                }
-                */
             }
         }
     }
@@ -50,7 +38,7 @@ class CommandManager(
         val commands = listOf(
             RCXGenCommand(),
             RCXDeleteCommand(),
-            RCXModifyCommand(),
+//            RCXModifyCommand(),
             RCXUsageCommand()
         )
         register(*commands.toTypedArray())

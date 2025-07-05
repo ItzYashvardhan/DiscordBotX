@@ -2,5 +2,7 @@ name: RedeemXBot
 version: '1.0.0'
 main: me.justlime.discordCodeX.RedeemXBot
 api-version: '1.13'
-softdepend: [RedeemCodeX]
+depend: [RedeemX]
+softdepend:
+  - PlaceholderAPI
 

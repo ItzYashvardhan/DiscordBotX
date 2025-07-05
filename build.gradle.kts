@@ -15,16 +15,19 @@ repositories {
         name = "sonatype"
     }
     maven { url = uri("https://jitpack.io") }
+    maven("https://repo.extendedclip.com/releases/") { name = "extendedclip" }
+
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT")
+    compileOnly("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.github.ItzYashvardhan:RedeemCodeX-API:1.0.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("net.dv8tion:JDA:5.6.1")
 }
 
-val targetJavaVersion = 17
+val targetJavaVersion = 8
 kotlin {
     jvmToolchain(targetJavaVersion)
 }

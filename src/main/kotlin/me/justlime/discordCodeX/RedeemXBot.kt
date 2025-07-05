@@ -1,15 +1,24 @@
 package me.justlime.discordCodeX
 
+import me.justlime.discordCodeX.commands.configuration.ConfigManager
 import me.justlime.discordCodeX.listener.CommandManager
 import me.justlime.discordCodeX.listener.GuildJoinListener
+import me.justlime.discordCodeX.utils.JServices
 import net.dv8tion.jda.api.JDA
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
+lateinit var rxbPlugin: RedeemXBot
 class RedeemXBot : JavaPlugin() {
     private lateinit var jda: JDA
 
     override fun onEnable() {
         setupConfig()
+        rxbPlugin = this
+
+        JServices.configManager = ConfigManager()
+
+        if(Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) JServices.isPlaceholderHooked = true
 
         // Check if the bot is enabled
         if (!config.getBoolean("bot.enabled")) {

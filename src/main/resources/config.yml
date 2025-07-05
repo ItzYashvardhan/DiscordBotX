@@ -7,15 +7,13 @@ guilds:
     - "GUILD_ID_1"
     - "GUILD_ID_2"
 
-
-
 ##ID of the channel where the bot can access commands
 channels:
   - "CHANNEL_ID_1"
   - "CHANNEL_ID_2"
 
-
 ##If a user have any one of role then they can access to bot command
+##[SAFE] Don't worry about normal user, although they may be have commands completion but doesn't have access to it included completion.
 roles:
   - "ROLE_ID_1"
   - "ROLE_ID_2"

@@ -2,8 +2,11 @@ package me.justlime.discordCodeX.commands.redeemcode
 
 import api.justlime.redeemcodex.RedeemXAPI
 import me.justlime.discordCodeX.commands.JRedeemCode
+import me.justlime.discordCodeX.enums.JMessages
+import me.justlime.discordCodeX.utils.JServices
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
+import net.dv8tion.jda.api.interactions.InteractionContextType
 import net.dv8tion.jda.api.interactions.commands.Command
 import net.dv8tion.jda.api.interactions.commands.OptionType
 import net.dv8tion.jda.api.interactions.commands.build.CommandData
@@ -13,61 +16,115 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData
 
 class RCXUsageCommand : JRedeemCode {
     override fun buildCommand(): CommandData {
-        return Commands.slash("usage", "View Usages of Code or Template").addSubcommands(
-            SubcommandData("code", "View Usages of a Specific Code").addOptions(
+        return Commands.slash(
+            JServices.getMessage(JMessages.USAGE_COMMAND.path),
+            JServices.getMessage(JMessages.USAGE_DESCRIPTION.path)
+        ).addSubcommands(
+            SubcommandData(
+                JServices.getMessage(JMessages.USAGE_CODE_SUBCOMMAND.path),
+                JServices.getMessage(JMessages.USAGE_CODE_DESCRIPTION.path)
+            ).addOptions(
                 OptionData(
                     OptionType.STRING,
-                    "code",
-                    "The code to view usage for",
+                    JServices.getMessage(JMessages.USAGE_CODE_COMPLETION.path),
+                    JServices.getMessage(JMessages.USAGE_CODE_OPTION_DESCRIPTION.path),
                     true
-                ).setAutoComplete(true), // Enable autocomplete for codes
-            ), SubcommandData("template", "View Usages of a Specific Template").addOptions(
+                ).setAutoComplete(true)
+            ),
+            SubcommandData(
+                JServices.getMessage(JMessages.USAGE_TEMPLATE_SUBCOMMAND.path),
+                JServices.getMessage(JMessages.USAGE_TEMPLATE_DESCRIPTION.path)
+            ).addOptions(
                 OptionData(
                     OptionType.STRING,
-                    "template",
-                    "The template to view usage for",
+                    JServices.getMessage(JMessages.USAGE_TEMPLATE_COMPLETION.path),
+                    JServices.getMessage(JMessages.USAGE_TEMPLATE_OPTION_DESCRIPTION.path),
                     true
-                ).setAutoComplete(true), // Enable autocomplete for templates
+                ).setAutoComplete(true)
             )
-        )
-            .setGuildOnly(true)
+        ).setContexts(InteractionContextType.GUILD)
     }
 
     override fun execute(event: SlashCommandInteractionEvent) {
-        val code = event.getOption("code")?.asString
-        val template = event.getOption("template")?.asString
-        val type = if (code != null) "code" else "template"
-        when (type) {
-            "code" -> {}
-            "template" -> {}
-        }
-        val message = ""
-        event.reply("```\n$message\n```").queue()
+        val subcommand = event.subcommandName
+        val code = event.getOption(JServices.getMessage(JMessages.USAGE_CODE_COMPLETION.path))?.asString
+        val template = event.getOption(JServices.getMessage(JMessages.USAGE_TEMPLATE_COMPLETION.path))?.asString
 
+        val reply = when (subcommand) {
+            JServices.getMessage(JMessages.USAGE_CODE_SUBCOMMAND.path) -> {
+
+                val redeemCode = RedeemXAPI.code.getCode(code ?: "") ?: return event.reply("Invalid code.").setEphemeral(true).queue()
+                val placeHolder = RedeemXAPI.code.getRCXPlaceHolder(redeemCode)
+                placeHolder.totalPlayerUsage = redeemCode.usedBy.size.toString()
+                var message = ""
+                message += JServices.getMessage(JMessages.USAGES_CODE_ENABLED.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_TEMPLATE.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_SYNC.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_REDEMPTION.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_LIMIT.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_PIN.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_PERMISSION.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_DURATION.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_COOLDOWN.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_REWARD_TITLE.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_REWARD_SUBTITLE.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_REWARD_ACTIONBAR.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_REWARD_SOUND.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_TARGET_LIST.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_REWARD_MESSAGE.path)
+                message += JServices.getMessage(JMessages.USAGES_CODE_COMMANDS.path)
+                JServices.applyPlaceholders(message, placeHolder)
+            }
+
+            JServices.getMessage(JMessages.USAGE_TEMPLATE_SUBCOMMAND.path) -> {
+                val redeemTemplate = RedeemXAPI.template.getTemplate(template ?: "") ?: return event.reply("Invalid template.").setEphemeral(true).queue()
+                val placeHolder = RedeemXAPI.template.getRCXPlaceHolder(redeemTemplate)
+                var message = ""
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_ENABLED.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_SYNC.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_REDEMPTION.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_LIMIT.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_PIN.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_PERMISSION.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_DURATION.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_COOLDOWN.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_REWARD_TITLE.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_REWARD_SUBTITLE.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_REWARD_ACTIONBAR.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_REWARD_SOUND.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_REWARD_MESSAGE.path)
+                message += JServices.getMessage(JMessages.USAGES_TEMPLATE_COMMANDS.path)
+                JServices.applyPlaceholders(message, placeHolder)
+
+            }
+
+            else -> "Invalid subcommand."
+        }
+
+        event.reply("```\n$reply\n```").queue()
     }
 
     override fun handleAutoComplete(event: CommandAutoCompleteInteractionEvent): List<Command.Choice> {
         val focusedOption = event.focusedOption.name
-        val query = event.focusedOption.value.lowercase() // User's input for filtering
-        val maxChoices = 25 // Discord's limit for choices
+        val query = event.focusedOption.value.lowercase()
+        val maxChoices = 25
 
         return when (focusedOption) {
-            "code" -> {
-                val availableCodes = RedeemXAPI.code.getCodes()
-                availableCodes.filter { it.lowercase().contains(query) } // Filter based on the query
-                    .take(maxChoices) // Limit to 25 results
-                    .map { Command.Choice(it, it) } // Map to Command.Choice
+            JServices.getMessage(JMessages.USAGE_CODE_COMPLETION.path) -> {
+                RedeemXAPI.code.getCodes()
+                    .filter { it.lowercase().contains(query) }
+                    .take(maxChoices)
+                    .map { Command.Choice(it, it) }
             }
 
-            "template" -> {
-                val availableTemplates = RedeemXAPI.template.getTemplates()
-                availableTemplates.filter { it.lowercase().contains(query) } // Filter based on the query
-                    .take(maxChoices) // Limit to 25 results
-                    .map { Command.Choice(it, it) } // Map to Command.Choice
+            JServices.getMessage(JMessages.USAGE_TEMPLATE_COMPLETION.path) -> {
+                RedeemXAPI.template.getTemplates()
+                    .filter { it.lowercase().contains(query) }
+                    .take(maxChoices)
+                    .map { Command.Choice(it, it) }
             }
 
             else -> emptyList()
         }
-
     }
 }
