@@ -1,6 +1,11 @@
-package me.justlime.discordCodeX.enums
+package me.justlime.redeemxbot.enums
 
 enum class JMessages(val path: String) {
+
+    INVALID_CODE("invalid-code"),
+    INVALID_TEMPLATE("invalid-template"),
+    INVALID_SUBCOMMAND("invalid-subcommand"),
+
 
     GENERATE_SUCCESS("generate-code-success"),
     GENERATE_FAILED("generate-code-failed"),
@@ -26,6 +31,12 @@ enum class JMessages(val path: String) {
     DELETE_TEMPLATE_DESCRIPTION("delete-template-description"),
     DELETE_TEMPLATE_COMPLETION("delete-template-completion"),
     DELETE_TEMPLATE_OPTION_DESCRIPTION("delete-template-option-description"),
+    DELETE_CODE_SUCCESS("delete-code-success"),
+    DELETE_TEMPLATE_SUCCESS("delete-template-success"),
+    DELETE_CODE_FAILED("delete-code-failed"),
+    DELETE_TEMPLATE_FAILED("delete-template-failed"),
+
+
 
     MODIFY_COMMAND("modify-command"),
     MODIFY_DESCRIPTION("modify-description"),
@@ -53,39 +64,35 @@ enum class JMessages(val path: String) {
     USAGE_TEMPLATE_COMPLETION("usage-template-completion"),
     USAGE_TEMPLATE_OPTION_DESCRIPTION("usage-template-option-description"),
 
-    USAGES_CODE_ENABLED("usages-code-enabled"),
-    USAGES_CODE_TEMPLATE("usages-code-template"),
-    USAGES_CODE_SYNC("usages-code-sync"),
-    USAGES_CODE_REDEMPTION("usages-code-redemption"),
-    USAGES_CODE_LIMIT("usages-code-limit"),
-    USAGES_CODE_PIN("usages-code-pin"),
-    USAGES_CODE_PERMISSION("usages-code-permission"),
-    USAGES_CODE_DURATION("usages-code-duration"),
-    USAGES_CODE_COOLDOWN("usages-code-cooldown"),
-    USAGES_CODE_REWARD_TITLE("usages-code-reward-title"),
-    USAGES_CODE_REWARD_SUBTITLE("usages-code-reward-subtitle"),
-    USAGES_CODE_REWARD_ACTIONBAR("usages-code-reward-actionbar"),
-    USAGES_CODE_REWARD_SOUND("usages-code-reward-sound"),
-    USAGES_CODE_TARGET_LIST("usages-code-target-list"),
-    USAGES_CODE_REWARD_MESSAGE("usages-code-reward-message"),
-    USAGES_CODE_COMMANDS("usages-code-commands"),
+    USAGES_CODE_ENABLED("usage-code-enabled"),
+    USAGES_CODE_TEMPLATE("usage-code-template"),
+    USAGES_CODE_SYNC("usage-code-sync"),
+    USAGES_CODE_REDEMPTION("usage-code-redemption"),
+    USAGES_CODE_LIMIT("usage-code-limit"),
+    USAGES_CODE_PIN("usage-code-pin"),
+    USAGES_CODE_PERMISSION("usage-code-permission"),
+    USAGES_CODE_DURATION("usage-code-duration"),
+    USAGES_CODE_COOLDOWN("usage-code-cooldown"),
+    USAGES_CODE_REWARD_TITLE("usage-code-reward-title"),
+    USAGES_CODE_REWARD_SUBTITLE("usage-code-reward-subtitle"),
+    USAGES_CODE_REWARD_ACTIONBAR("usage-code-reward-actionbar"),
+    USAGES_CODE_REWARD_SOUND("usage-code-reward-sound"),
+    USAGES_CODE_TARGET_LIST("usage-code-target-list"),
+    USAGES_CODE_REWARD_MESSAGE("usage-code-reward-message"),
+    USAGES_CODE_COMMANDS("usage-code-commands"),
 
-    USAGES_TEMPLATE_ENABLED("usages-template-enabled"),
-    USAGES_TEMPLATE_SYNC("usages-template-sync"),
-    USAGES_TEMPLATE_REDEMPTION("usages-template-redemption"),
-    USAGES_TEMPLATE_LIMIT("usages-template-limit"),
-    USAGES_TEMPLATE_PIN("usages-template-pin"),
-    USAGES_TEMPLATE_PERMISSION("usages-template-permission"),
-    USAGES_TEMPLATE_DURATION("usages-template-duration"),
-    USAGES_TEMPLATE_COOLDOWN("usages-template-cooldown"),
-    USAGES_TEMPLATE_REWARD_MESSAGE("usages-template-reward-message"),
-    USAGES_TEMPLATE_REWARD_TITLE("usages-template-reward-title"),
-    USAGES_TEMPLATE_REWARD_SUBTITLE("usages-template-reward-subtitle"),
-    USAGES_TEMPLATE_REWARD_ACTIONBAR("usages-template-reward-actionbar"),
-    USAGES_TEMPLATE_REWARD_SOUND("usages-template-reward-sound"),
-    USAGES_TEMPLATE_COMMANDS("usages-template-commands"),
-
-
-
-
+    USAGES_TEMPLATE_ENABLED("usage-template-enabled"),
+    USAGES_TEMPLATE_SYNC("usage-template-sync"),
+    USAGES_TEMPLATE_REDEMPTION("usage-template-redemption"),
+    USAGES_TEMPLATE_LIMIT("usage-template-limit"),
+    USAGES_TEMPLATE_PIN("usage-template-pin"),
+    USAGES_TEMPLATE_PERMISSION("usage-template-permission"),
+    USAGES_TEMPLATE_DURATION("usage-template-duration"),
+    USAGES_TEMPLATE_COOLDOWN("usage-template-cooldown"),
+    USAGES_TEMPLATE_REWARD_MESSAGE("usage-template-reward-message"),
+    USAGES_TEMPLATE_REWARD_TITLE("usage-template-reward-title"),
+    USAGES_TEMPLATE_REWARD_SUBTITLE("usage-template-reward-subtitle"),
+    USAGES_TEMPLATE_REWARD_ACTIONBAR("usage-template-reward-actionbar"),
+    USAGES_TEMPLATE_REWARD_SOUND("usage-template-reward-sound"),
+    USAGES_TEMPLATE_COMMANDS("usage-template-commands")
 }

@@ -1,4 +1,4 @@
-package me.justlime.discordCodeX.commands
+package me.justlime.redeemxbot.commands
 
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent

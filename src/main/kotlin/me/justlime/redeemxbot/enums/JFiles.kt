@@ -1,4 +1,4 @@
-package me.justlime.discordCodeX.enums
+package me.justlime.redeemxbot.enums
 
 enum class JFiles(val fileName: String) {
     CONFIG("config.yml"),

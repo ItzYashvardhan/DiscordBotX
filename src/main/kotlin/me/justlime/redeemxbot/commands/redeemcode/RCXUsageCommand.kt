@@ -1,9 +1,9 @@
-package me.justlime.discordCodeX.commands.redeemcode
+package me.justlime.redeemxbot.commands.redeemcode
 
 import api.justlime.redeemcodex.RedeemXAPI
-import me.justlime.discordCodeX.commands.JRedeemCode
-import me.justlime.discordCodeX.enums.JMessages
-import me.justlime.discordCodeX.utils.JServices
+import me.justlime.redeemxbot.commands.JRedeemCode
+import me.justlime.redeemxbot.enums.JMessages
+import me.justlime.redeemxbot.utils.JServices
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.InteractionContextType
@@ -77,7 +77,11 @@ class RCXUsageCommand : JRedeemCode {
             }
 
             JServices.getMessage(JMessages.USAGE_TEMPLATE_SUBCOMMAND.path) -> {
-                val redeemTemplate = RedeemXAPI.template.getTemplate(template ?: "") ?: return event.reply("Invalid template.").setEphemeral(true).queue()
+                val redeemTemplate = try {
+                    RedeemXAPI.template.getTemplate(template ?: "") ?: return event.reply(JServices.getMessage(JMessages.INVALID_TEMPLATE.path)).setEphemeral(true).queue()
+                } catch (e: Exception) {
+                    return event.reply(JServices.getMessage(JMessages.INVALID_TEMPLATE.path)).setEphemeral(true).queue()
+                }
                 val placeHolder = RedeemXAPI.template.getRCXPlaceHolder(redeemTemplate)
                 var message = ""
                 message += JServices.getMessage(JMessages.USAGES_TEMPLATE_ENABLED.path)
@@ -98,10 +102,10 @@ class RCXUsageCommand : JRedeemCode {
 
             }
 
-            else -> "Invalid subcommand."
+            else -> JServices.getMessage(JMessages.INVALID_SUBCOMMAND.path)
         }
 
-        event.reply("```\n$reply\n```").queue()
+        event.reply(reply).queue()
     }
 
     override fun handleAutoComplete(event: CommandAutoCompleteInteractionEvent): List<Command.Choice> {

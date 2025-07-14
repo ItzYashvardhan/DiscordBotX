@@ -1,9 +1,9 @@
-package me.justlime.discordCodeX
+package me.justlime.redeemxbot
 
-import me.justlime.discordCodeX.commands.configuration.ConfigManager
-import me.justlime.discordCodeX.listener.CommandManager
-import me.justlime.discordCodeX.listener.GuildJoinListener
-import me.justlime.discordCodeX.utils.JServices
+import me.justlime.redeemxbot.commands.configuration.ConfigManager
+import me.justlime.redeemxbot.listener.CommandManager
+import me.justlime.redeemxbot.listener.GuildJoinListener
+import me.justlime.redeemxbot.utils.JServices
 import net.dv8tion.jda.api.JDA
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
@@ -16,6 +16,8 @@ class RedeemXBot : JavaPlugin() {
     private lateinit var jda: JDA
 
     override fun onEnable() {
+        Class.forName("org.slf4j.LoggerFactory")
+
         setupConfig()
         rxbPlugin = this
 

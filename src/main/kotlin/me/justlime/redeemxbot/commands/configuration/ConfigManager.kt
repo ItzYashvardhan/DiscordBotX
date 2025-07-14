@@ -1,8 +1,8 @@
-package me.justlime.discordCodeX.commands.configuration
+package me.justlime.redeemxbot.commands.configuration
 
-import me.justlime.discordCodeX.enums.JFiles
-import me.justlime.discordCodeX.enums.JMessages
-import me.justlime.discordCodeX.rxbPlugin
+import me.justlime.redeemxbot.enums.JFiles
+import me.justlime.redeemxbot.enums.JMessages
+import me.justlime.redeemxbot.rxbPlugin
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File

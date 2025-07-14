@@ -1,10 +1,10 @@
-package me.justlime.discordCodeX.listener
+package me.justlime.redeemxbot.listener
 
-import me.justlime.discordCodeX.commands.JRedeemCode
-import me.justlime.discordCodeX.commands.redeemcode.RCXDeleteCommand
-import me.justlime.discordCodeX.commands.redeemcode.RCXGenCommand
-import me.justlime.discordCodeX.commands.redeemcode.RCXUsageCommand
-import me.justlime.discordCodeX.rxbPlugin
+import me.justlime.redeemxbot.commands.JRedeemCode
+import me.justlime.redeemxbot.commands.redeemcode.RCXDeleteCommand
+import me.justlime.redeemxbot.commands.redeemcode.RCXGenCommand
+import me.justlime.redeemxbot.commands.redeemcode.RCXUsageCommand
+import me.justlime.redeemxbot.rxbPlugin
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent

@@ -1,10 +1,9 @@
-package me.justlime.discordCodeX.commands.redeemcode
+package me.justlime.redeemxbot.commands.redeemcode
 
 import api.justlime.redeemcodex.RedeemXAPI
-import api.justlime.redeemcodex.models.RedeemCode
-import me.justlime.discordCodeX.commands.JRedeemCode
-import me.justlime.discordCodeX.enums.JMessages
-import me.justlime.discordCodeX.utils.JServices
+import me.justlime.redeemxbot.commands.JRedeemCode
+import me.justlime.redeemxbot.enums.JMessages
+import me.justlime.redeemxbot.utils.JServices
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.Command
@@ -58,45 +57,48 @@ class RCXGenCommand : JRedeemCode {
         val digit = event.getOption(JServices.getMessage(JMessages.GENERATE_DIGIT_COMPLETION.path))?.asInt
         val custom = event.getOption(JServices.getMessage(JMessages.GENERATE_CUSTOM_COMPLETION.path))?.asString
         val amount = event.getOption(JServices.getMessage(JMessages.GENERATE_AMOUNT_COMPLETION.path))?.asInt ?: 1
-        val template = event.getOption(JServices.getMessage(JMessages.GENERATE_TEMPLATE_COMPLETION.path))?.asString
-            ?: DEFAULT_TEMPLATE
+        val template = event.getOption(JServices.getMessage(JMessages.GENERATE_TEMPLATE_COMPLETION.path))
+            ?.asString ?: DEFAULT_TEMPLATE
 
         val generatedCodes = mutableListOf<String>()
-        val existingCodes = RedeemXAPI.code.getCodes()
+        val existingCodeSet = RedeemXAPI.code.getCodes().toSet()
 
-        // Generate custom codes
+        // Handle custom codes
         val customCodeList = custom?.split(" ")
             ?.map(String::trim)
             ?.filter(String::isNotEmpty)
-            ?.mapNotNull { code ->
-                val generated = RedeemXAPI.code.generateCode(code, template)
-                if (!existingCodes.contains(generated.code)) {
-                    generated
-                } else null
+            ?.map { code ->
+                if (code.isNotEmpty() && code !in existingCodeSet) RedeemXAPI.code.generateCode(code, template) else null
             } ?: emptyList()
 
         if (customCodeList.isNotEmpty()) {
-            RedeemXAPI.code.upsertCodes(customCodeList)
-            generatedCodes.addAll(customCodeList.map { it.code })
+            RedeemXAPI.code.upsertCodes(customCodeList.mapNotNull { it })
+            generatedCodes.addAll(customCodeList.mapNotNull { it?.code })
         }
 
-        // Generate digit codes
-        digit?.let { digit ->
+        // Handle digit-generated codes
+        digit?.let {
             val digitCodes = RedeemXAPI.code.generateCode(digit, template, amount)
-            RedeemXAPI.code.upsertCodes(digitCodes.toList())
-            generatedCodes.addAll(digitCodes.map { it.code })
+            val newDigitCodes = digitCodes.filter { it.code !in existingCodeSet }
+            if (newDigitCodes.isNotEmpty()) {
+                RedeemXAPI.code.upsertCodes(newDigitCodes)
+                generatedCodes.addAll(newDigitCodes.map { it.code })
+            }
         }
 
-        // Reply with the generated codes
+        // Reply
         if (generatedCodes.isEmpty()) {
             event.reply(JServices.getMessage(JMessages.GENERATE_FAILED.path)).setEphemeral(true).queue()
             return
         }
+
         val replyMessage = JServices.getMessage(JMessages.GENERATE_SUCCESS.path)
             .replace("{code}", generatedCodes.joinToString(" "))
             .replace("{template}", template)
+
         event.reply(replyMessage).queue()
     }
+
 
     override fun handleAutoComplete(event: CommandAutoCompleteInteractionEvent): List<Command.Choice> {
         val focusedOption = event.focusedOption.name

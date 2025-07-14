@@ -1,4 +1,4 @@
-package me.justlime.discordCodeX
+package me.justlime.redeemxbot
 
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder

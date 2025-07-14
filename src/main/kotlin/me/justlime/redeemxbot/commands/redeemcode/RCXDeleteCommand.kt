@@ -1,10 +1,9 @@
-package me.justlime.discordCodeX.commands.redeemcode
+package me.justlime.redeemxbot.commands.redeemcode
 
 import api.justlime.redeemcodex.RedeemXAPI
-import me.justlime.discordCodeX.commands.JRedeemCode
-import me.justlime.discordCodeX.enums.JMessages
-import me.justlime.discordCodeX.rxbPlugin
-import me.justlime.discordCodeX.utils.JServices
+import me.justlime.redeemxbot.commands.JRedeemCode
+import me.justlime.redeemxbot.enums.JMessages
+import me.justlime.redeemxbot.utils.JServices
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent
 import net.dv8tion.jda.api.interactions.commands.Command
@@ -83,17 +82,28 @@ class RCXDeleteCommand : JRedeemCode {
 
 
         if (!result) {
-            event.reply("Failed to delete $subcommand").setEphemeral(true).queue()
+            if (subcommand == JServices.getMessage(JMessages.DELETE_TEMPLATE_SUBCOMMAND.path)) {
+                event.reply(JServices.getMessage(JMessages.DELETE_TEMPLATE_FAILED.path)).setEphemeral(true).queue()
+                return
+            }
+            event.reply(JServices.getMessage(JMessages.DELETE_CODE_FAILED.path)).setEphemeral(true).queue()
             return
         }
 
-        val message = if (optionValue == "*") {
-            "Deleted all $subcommand(s)."
-        } else {
-            "Deleted $subcommand: $optionValue"
+
+        val message = when (subcommand) {
+            JServices.getMessage(JMessages.DELETE_CODE_SUBCOMMAND.path) -> {
+                JServices.getMessage(JMessages.DELETE_CODE_SUCCESS.path).replace("{code}", optionValue ?: "")
+            }
+
+            JServices.getMessage(JMessages.DELETE_TEMPLATE_SUBCOMMAND.path) -> {
+                JServices.getMessage(JMessages.DELETE_CODE_SUCCESS.path).replace("{template}", optionValue ?: "")
+            }
+            else -> JServices.getMessage(JMessages.INVALID_SUBCOMMAND.path)
         }
 
-        event.reply("```\n$message```").queue()
+
+        event.reply(message).queue()
     }
 
     override fun handleAutoComplete(event: CommandAutoCompleteInteractionEvent): List<Command.Choice> {
